@@ -12,10 +12,10 @@ public class RabbitMQSender {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
-    @Value("backend.exchange")
+    @Value("microservice.eventbus")
     private String exchange;
 
-    @Value("backend.routingKey")
+    @Value("anonymous.info")
     private String routingKey;
 
     public void send(Rent rent){
