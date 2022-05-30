@@ -7,13 +7,20 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Bill.class)
 public class Bill {
-    private String billID;
-    private String billCustomer;
+    private String customer_id;
+    private String firstname;
+    private String lastname;
+    private String payment_receiver;
+    private String payment_bank;
+    private String payment_price;
 
     @Override
     public String toString() {
-        return "Mietantrag [mieterName=" + billCustomer + ", mieterID=" + billID + "]";
+        return "Rechnung [mieterID=" + customer_id + ", mieterVorname=" + firstname
+                + ", mieterNachname=" + lastname + ", Empfänger=" + payment_receiver
+                + ", Bankleitzahl=" + payment_bank + ", Preis=" + payment_price
+                + "]";
     }
 }
+

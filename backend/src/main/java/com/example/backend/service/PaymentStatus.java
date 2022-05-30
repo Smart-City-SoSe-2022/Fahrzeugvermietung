@@ -9,9 +9,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RabbitConsumer implements MessageListener {
+public class PaymentStatus implements MessageListener {
     @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "",durable = ""),
-            exchange = @Exchange(value = "microservice.eventbus",type = "topic",durable = ""),key = "anonymous.info"
+            exchange = @Exchange(value = "microservice.eventbus",type = "topic",durable = ""),key = "bank.payment.status.fahrzeugvermietung"
     )
     )
     @Override

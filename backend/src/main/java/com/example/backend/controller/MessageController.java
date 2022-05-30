@@ -15,11 +15,21 @@ public class MessageController {
     @Autowired
     RabbitMQSender rabbitMQSender;
 
-    @GetMapping(value ="/producer")
-    public String producer(@RequestParam("billCustomer") String billCustomer, @RequestParam("billID") String billID){
+    @GetMapping(value ="/gemietete_fahrzeuge/id")
+    public String producer(@RequestParam("customer_id") String customer_id,
+                           @RequestParam("firstname") String firstname,
+                           @RequestParam("lastname") String lastname,
+                           @RequestParam("payment_receiver") String payment_receiver,
+                           @RequestParam("payment_bank") String payment_bank,
+                           @RequestParam("payment_price") String payment_price
+                           ){
         Bill bill = new Bill();
-        bill.setBillID(billID);
-        bill.setBillCustomer(billCustomer);
+        bill.setCustomer_id(customer_id);
+        bill.setFirstname(firstname);
+        bill.setLastname(lastname);
+        bill.setPayment_receiver(payment_receiver);
+        bill.setPayment_bank(payment_bank);
+        bill.setPayment_price(payment_price);
         rabbitMQSender.send(bill);
 
         return "Message sent succesfully";

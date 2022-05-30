@@ -15,7 +15,7 @@ public class RabbitMQSender {
     @Value("microservice.eventbus")
     private String exchange;
 
-    @Value("anonymous.info")
+    @Value("bank.payment.received")
     private String routingKey;
 
     public void send(Bill bill){
