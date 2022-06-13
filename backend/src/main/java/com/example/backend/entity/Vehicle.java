@@ -14,7 +14,7 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int customerID;
+    private Long customerID;
     private String type;
     private String modell;
     private String color;

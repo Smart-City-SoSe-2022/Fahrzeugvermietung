@@ -43,6 +43,7 @@ public class ContractController {
         contractRepository.saveAndFlush(new Contract(customerID,vehicleID,priceOption,returnDate));
         Vehicle vehicle = vehicleRepository.findById(vehicleID).get();
         vehicle.setAvailability(false);
+        vehicle.setCustomerID(customerID);
         vehicleRepository.save(vehicle);
         rabbitMQSender.send(new BillForBank(customerID,priceOption));
     }
