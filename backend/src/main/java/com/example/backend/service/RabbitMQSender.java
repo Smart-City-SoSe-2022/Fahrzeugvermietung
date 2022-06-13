@@ -1,6 +1,6 @@
 package com.example.backend.service;
 
-import com.example.backend.Bill;
+import com.example.backend.BillForBank;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ public class RabbitMQSender {
     @Value("bank.payment.received")
     private String routingKey;
 
-    public void send(Bill bill){
+    public void send(BillForBank bill){
         rabbitTemplate.convertAndSend(exchange,routingKey,bill);
         System.out.println("Send msg = " + bill);
     }

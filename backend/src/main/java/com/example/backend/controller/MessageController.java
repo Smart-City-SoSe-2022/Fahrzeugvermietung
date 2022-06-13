@@ -1,6 +1,6 @@
 package com.example.backend.controller;
 
-import com.example.backend.Bill;
+import com.example.backend.BillForBank;
 import com.example.backend.service.RabbitMQSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ public class MessageController {
                            @RequestParam("payment_bank") String payment_bank,
                            @RequestParam("payment_price") String payment_price
                            ){
-        Bill bill = new Bill();
+        BillForBank bill = new BillForBank();
         bill.setCustomer_id(customer_id);
         bill.setFirstname(firstname);
         bill.setLastname(lastname);

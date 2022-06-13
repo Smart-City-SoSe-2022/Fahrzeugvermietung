@@ -27,7 +27,6 @@ public class Vehicle {
     private boolean availability;
 
     public Vehicle(String type, String modell, String color, int distance, int maxSpeed, int mileage, int priceDay, int priceWeek, int priceMonth, boolean availability) {
-
         this.type = type;
         this.modell = modell;
         this.color = color;

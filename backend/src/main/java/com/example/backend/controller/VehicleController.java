@@ -39,11 +39,6 @@ public class VehicleController {
         return list;
     }
 
-    @GetMapping("/fahrzeug/{id}")
-    public Vehicle getVehicle(@PathVariable("id") Long id){
-        return vehicleRepository.getById(id);
-    }
-
     @PostMapping("/neues_fahrzeug")
     public void createVehicle(@RequestParam("type") String type,
                               @RequestParam("modell") String modell,

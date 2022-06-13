@@ -1,13 +1,11 @@
 package com.example.backend;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class Bill {
+public class BillForBank {
     private String customer_id;
     private String firstname;
     private String lastname;
