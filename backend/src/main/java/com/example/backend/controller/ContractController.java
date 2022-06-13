@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/fahrzeugvermietung/fahrzeug/{id}")
 public class ContractController {
-
     private ContractRepository contractRepository;
     private VehicleRepository vehicleRepository;
     @Autowired
@@ -37,8 +36,9 @@ public class ContractController {
     }
 
     @PostMapping("")
-    public void createRentContract(@RequestParam("priceOption") int priceOption){
-        contractRepository.saveAndFlush(new Contract(customerID,vehicleID,priceOption));
+    public void createRentContract(@RequestParam("priceOption") int priceOption,
+                                    @RequestParam("returnDate") String returnDate){
+        contractRepository.saveAndFlush(new Contract(customerID,vehicleID,priceOption,returnDate));
         rabbitMQSender.send(new BillForBank(customerID,priceOption));
     }
 

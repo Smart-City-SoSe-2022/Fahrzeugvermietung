@@ -17,11 +17,13 @@ public class Contract {
     private Long customerID;
     private Long vehicleID;
     private int priceOption;
+    private String returnDate;
 
-    public Contract(Long customerID, Long vehicleID, int priceOption){
+    public Contract(Long customerID, Long vehicleID, int priceOption, String returnDate){
         this.customerID = customerID;
         this.vehicleID = vehicleID;
         this.priceOption = priceOption;
+        this.returnDate = returnDate;
     }
 
     public Contract(){
