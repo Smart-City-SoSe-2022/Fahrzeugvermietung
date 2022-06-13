@@ -12,6 +12,8 @@ import com.example.backend.service.RabbitMQSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/fahrzeugvermietung/fahrzeug/{id}")
 public class ContractController {
@@ -39,6 +41,9 @@ public class ContractController {
     public void createRentContract(@RequestParam("priceOption") int priceOption,
                                     @RequestParam("returnDate") String returnDate){
         contractRepository.saveAndFlush(new Contract(customerID,vehicleID,priceOption,returnDate));
+        Vehicle vehicle = vehicleRepository.findById(vehicleID).get();
+        vehicle.setAvailability(false);
+        vehicleRepository.save(vehicle);
         rabbitMQSender.send(new BillForBank(customerID,priceOption));
     }
 
