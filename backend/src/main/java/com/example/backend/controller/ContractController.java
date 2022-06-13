@@ -1,11 +1,15 @@
 package com.example.backend.controller;
 
+import com.example.backend.BillForBank;
 import com.example.backend.entity.Contract;
 import com.example.backend.entity.Customer;
 import com.example.backend.entity.Vehicle;
 import com.example.backend.repository.ContractRepository;
 import com.example.backend.repository.CustomerRepository;
 import com.example.backend.repository.VehicleRepository;
+import com.example.backend.service.PaymentStatus;
+import com.example.backend.service.RabbitMQSender;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +18,8 @@ public class ContractController {
 
     private ContractRepository contractRepository;
     private VehicleRepository vehicleRepository;
+    @Autowired
+    RabbitMQSender rabbitMQSender;
     private Long vehicleID;
     private Long customerID;
 
@@ -33,6 +39,7 @@ public class ContractController {
     @PostMapping("")
     public void createRentContract(@RequestParam("priceOption") int priceOption){
         contractRepository.saveAndFlush(new Contract(customerID,vehicleID,priceOption));
+        rabbitMQSender.send(new BillForBank(customerID,priceOption));
     }
 
 }

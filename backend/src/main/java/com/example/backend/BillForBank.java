@@ -6,12 +6,17 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BillForBank {
-    private String customer_id;
-    private String firstname;
-    private String lastname;
-    private String payment_receiver;
-    private String payment_bank;
-    private String payment_price;
+    private Long customer_id=1L;
+    private String firstname="Carl";
+    private String lastname="Bergson";
+    private String payment_receiver="Smart Rent";
+    private String payment_bank="DE348992xxxx00068x";
+    private int payment_price;
+
+    public BillForBank(Long customer_id, int payment_price) {
+        this.customer_id = customer_id;
+        this.payment_price = payment_price;
+    }
 
     @Override
     public String toString() {
