@@ -31,10 +31,10 @@ metadata:
           f:type: {}
 spec:
   ports:
-    - name: tcp-9002-5000-8hx9p
+    - name: tcp-9002-8080-8hx9p
       protocol: TCP
       port: 9002
-      targetPort: 5000
+      targetPort: 8080
   selector:
     k8s-app: fahrzeugvermietung-backend
   clusterIP: 10.109.232.130
