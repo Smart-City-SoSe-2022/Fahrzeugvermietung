@@ -4,6 +4,12 @@
 #
 apiVersion: apps/v1
 kind: Deployment
+metadata:
+  generation: 6
+  labels:
+    k8s-app: portal-frontend
+  name: portal-frontend
+  namespace: default
 spec:
   progressDeadlineSeconds: 600
   replicas: 3
