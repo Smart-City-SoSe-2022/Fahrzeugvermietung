@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+spec:
+  ports:
+    - name: tcp-8002-80-mnjzb
+      protocol: TCP
+      port: 8002
+      targetPort: 80
+      nodePort: 30134
+  selector:
+    k8s-app: fahrzeugvermietung-frontend
+  clusterIP: 10.107.77.31
+  clusterIPs:
+    - 10.107.77.31
+  type: LoadBalancer
+  externalIPs:
+    - 217.160.47.130
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  allocateLoadBalancerNodePorts: true
+  internalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}
