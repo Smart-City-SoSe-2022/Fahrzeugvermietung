@@ -33,7 +33,7 @@ spec:
         name: fahrzeugvermietung-backend
         envFrom:
         - configMapRef:
-          name: fahrzeugvermietung-backend
+            name: fahrzeugvermietung-backend
         resources: {}
         securityContext:
           privileged: false
