@@ -16,6 +16,7 @@ public class VehicleController {
     }
 
     @GetMapping("")
+    @CrossOrigin
     public List<Vehicle> index(){
         List<Vehicle> list = vehicleRepository.findAll();
         for(int i=0;i<list.size();i++){
