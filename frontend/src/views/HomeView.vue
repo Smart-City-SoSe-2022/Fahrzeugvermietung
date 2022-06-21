@@ -20,7 +20,16 @@ export default {
   },
   methods: {
     async fetchVehicles() {
-      const res = await fetch('http://server.it-humke.de:9002/fahrzeugvermietung')
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type","application/json");
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow',
+        credentials: "include"
+      }
+      const res = await fetch('http://localhost:8080/fahrzeugvermietung', requestOptions)
 
       const data = await res.json()
 
