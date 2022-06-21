@@ -12,15 +12,13 @@ import javax.persistence.Id;
 @Entity
 public class Customer{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstname;
-    private String lastname;
-    private String salution;
-    private String birthdate;
-    private int tel;
-    private String address;
-    private String city;
-    private int zipcode;
 
+    public Customer(Long id){
+        this.id=id;
+    }
+
+    public Customer() {
+
+    }
 }
