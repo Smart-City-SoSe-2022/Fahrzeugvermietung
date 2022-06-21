@@ -31,7 +31,6 @@ public class ContractController {
     }
 
     @GetMapping("")
-    @CrossOrigin
     public Vehicle getVehicle(@PathVariable("id") Long id){
         this.vehicleID=id;
         this.customerID=1L;
