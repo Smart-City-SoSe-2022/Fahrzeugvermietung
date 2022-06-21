@@ -1,35 +1,16 @@
 <template>
-  <Header title="Fahrzeugvermietung"/>
-  <Vehicles :vehicles="vehicles" />
+  <div class="home">
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
 </template>
 
 <script>
-import Header from '../components/Header.vue'
-import Vehicles from '../components/Vehicles.vue'
+// @ is an alias to /src
 
 export default {
-  name: 'Home',
+  name: 'HomeView',
   components: {
-    Header,
-    Vehicles
-  },
-  data() {
-    return {
-      vehicles: []
-    }
-  },
-  methods: {
-    async fetchVehicles() {
-      const res = await fetch('http://server.it-humke.de:9002/fahrzeugvermietung')
-
-      const data = await res.json()
-
-      return data
-    }
-  },
-  async created() {
-    this.vehicles = await this.fetchVehicles()
   }
 }
-
 </script>
