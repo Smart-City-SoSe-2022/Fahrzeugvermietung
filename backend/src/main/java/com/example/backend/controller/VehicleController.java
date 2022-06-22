@@ -3,9 +3,6 @@ package com.example.backend.controller;
 import com.example.backend.entity.Vehicle;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -27,12 +24,6 @@ public class VehicleController {
             }
         }
         return list;
-    }
-
-    @GetMapping("/get")
-    public boolean getter(HttpServletResponse httpServletResponse){
-        httpServletResponse.addCookie(new Cookie("JWT","eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsIm5hbWUiOiJEYW4gRGFuIiwiZXhwIjoxNjU5OTk5OTk5fQ.LA3-zUUbGLuvsTDA75O_fzd2mTY9w3hsFiOeQouzWqs"));
-        return true;
     }
 
     @GetMapping("/vermietete_fahrzeuge")

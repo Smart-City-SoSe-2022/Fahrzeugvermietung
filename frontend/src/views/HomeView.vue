@@ -29,7 +29,7 @@ export default {
         redirect: 'follow',
         credentials: "include"
       }
-      const res = await fetch('http://localhost:8080/fahrzeugvermietung', requestOptions)
+      const res = await fetch('http://server.it-humke.de:9002/fahrzeugvermietung', requestOptions)
 
       const data = await res.json()
 
