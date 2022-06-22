@@ -3,7 +3,6 @@ package com.example.backend.controller;
 import com.example.backend.entity.Vehicle;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,7 +15,6 @@ public class VehicleController {
     }
 
     @GetMapping("")
-    @CrossOrigin
     public List<Vehicle> index(){
         List<Vehicle> list = vehicleRepository.findAll();
         for(int i=0;i<list.size();i++){
