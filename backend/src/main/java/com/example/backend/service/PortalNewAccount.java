@@ -18,7 +18,6 @@ import java.util.Map;
 
 @Component
 public class PortalNewAccount implements MessageListener {
-
     private CustomerRepository customerRepository;
 
     public PortalNewAccount(CustomerRepository customerRepository) {

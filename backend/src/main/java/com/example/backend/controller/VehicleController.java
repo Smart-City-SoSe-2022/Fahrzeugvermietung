@@ -1,29 +1,39 @@
 package com.example.backend.controller;
 
 import com.example.backend.entity.Vehicle;
+import com.example.backend.jwt.JwtTokenUtil;
+import com.example.backend.repository.CustomerRepository;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/fahrzeugvermietung")
 public class VehicleController {
     private VehicleRepository vehicleRepository;
+    private JwtTokenUtil jwtTokenUtil;
 
-    public VehicleController(VehicleRepository vehicleRepository) {
+    public VehicleController(VehicleRepository vehicleRepository, CustomerRepository customerRepository) {
         this.vehicleRepository = vehicleRepository;
+        jwtTokenUtil = new JwtTokenUtil(customerRepository);
     }
 
     @GetMapping("")
-    public List<Vehicle> index(){
-        List<Vehicle> list = vehicleRepository.findAll();
-        for(int i=0;i<list.size();i++){
-            if(!list.get(i).isAvailability()){
-                list.remove(i);
-                i--;
+    public List<Vehicle> index(@CookieValue(name = "JWT") String jwtID){
+        if(jwtTokenUtil.checkLoggedIn(jwtID)){
+            List<Vehicle> list = vehicleRepository.findAll();
+            for(int i=0;i<list.size();i++){
+                if(!list.get(i).isAvailability()){
+                    list.remove(i);
+                    i--;
+                }
             }
+            return list;
+        }else {
+         return new ArrayList<Vehicle>();
         }
-        return list;
     }
 
     @GetMapping("/vermietete_fahrzeuge")
