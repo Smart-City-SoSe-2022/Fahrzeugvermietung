@@ -2,10 +2,12 @@ package com.example.backend.controller;
 
 import com.example.backend.entity.Vehicle;
 import com.example.backend.jwt.JwtTokenUtil;
-import com.example.backend.repository.CustomerRepository;
+import com.example.backend.repository.UserRepository;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,9 @@ public class VehicleController {
     private VehicleRepository vehicleRepository;
     private JwtTokenUtil jwtTokenUtil;
 
-    public VehicleController(VehicleRepository vehicleRepository, CustomerRepository customerRepository) {
+    public VehicleController(VehicleRepository vehicleRepository, UserRepository userRepository) {
         this.vehicleRepository = vehicleRepository;
-        jwtTokenUtil = new JwtTokenUtil(customerRepository);
+        jwtTokenUtil = new JwtTokenUtil(userRepository);
     }
 
     @GetMapping("")
@@ -34,6 +36,11 @@ public class VehicleController {
         }else {
          return new ArrayList<Vehicle>();
         }
+    }
+
+    @GetMapping("/user")
+    public boolean isLessor(@CookieValue(name = "JWT") String jwtID){
+        return jwtTokenUtil.checkUserLessor(jwtID);
     }
 
     @GetMapping("/vermietete_fahrzeuge")

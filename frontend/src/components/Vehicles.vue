@@ -1,17 +1,19 @@
 <template>
-    <div>
-        <div class="container" :key="vehicle.id" v-for="vehicle in vehicles.filter(item => item.type === 'Fahrrad')">
+    <div class="containerOutside">
+        <div>
+            <div class="container" :key="vehicle.id" v-for="vehicle in vehicles.filter(item => item.type === 'Fahrrad')">
+                <Vehicle @click="viewVehicle(vehicle.id)" :vehicle="vehicle"/>
+            </div>
+        </div>
+        <div>
+            <div class="container" :key="vehicle.id" v-for="vehicle in vehicles.filter(item => item.type === 'Roller')">
             <Vehicle @click="viewVehicle(vehicle.id)" :vehicle="vehicle"/>
+            </div>
         </div>
-    </div>
-    <div>
-        <div class="container" :key="vehicle.id" v-for="vehicle in vehicles.filter(item => item.type === 'Roller')">
-        <Vehicle @click="viewVehicle(vehicle.id)" :vehicle="vehicle"/>
-        </div>
-    </div>
-    <div>
-        <div class="container" :key="vehicle.id" v-for="vehicle in vehicles.filter(item => item.type === 'Auto')">
-        <Vehicle @click="viewVehicle(vehicle.id)" :vehicle="vehicle"/>
+        <div>
+            <div class="container" :key="vehicle.id" v-for="vehicle in vehicles.filter(item => item.type === 'Auto')">
+            <Vehicle @click="viewVehicle(vehicle.id)" :vehicle="vehicle"/>
+            </div>
         </div>
     </div>
 </template>
@@ -48,5 +50,14 @@ export default {
         display: inline-block;
         justify-content: space-between;
         margin-left: 10px;
+    }
+    .containerOutside {
+        margin: 20px auto;
+        overflow: auto;
+        border: 1px solid black;
+        padding: 5px;
+        border-radius: 5px;
+        margin-inline: 200px;
+        margin-block: 50px;
     }
 </style>

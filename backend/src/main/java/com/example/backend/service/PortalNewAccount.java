@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
-import com.example.backend.entity.Customer;
+import com.example.backend.entity.User;
 
-import com.example.backend.repository.CustomerRepository;
+import com.example.backend.repository.UserRepository;
 import net.minidev.json.*;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -14,13 +14,11 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 @Component
 public class PortalNewAccount implements MessageListener {
-    private CustomerRepository customerRepository;
+    private UserRepository customerRepository;
 
-    public PortalNewAccount(CustomerRepository customerRepository) {
+    public PortalNewAccount(UserRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -38,6 +36,6 @@ public class PortalNewAccount implements MessageListener {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        customerRepository.saveAndFlush(new Customer(neu.getAsNumber("id").longValue()));
+        customerRepository.saveAndFlush(new User(neu.getAsNumber("id").longValue()));
     }
 }

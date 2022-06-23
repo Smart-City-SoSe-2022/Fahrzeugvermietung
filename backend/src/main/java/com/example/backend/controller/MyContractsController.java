@@ -18,7 +18,7 @@ import java.util.Optional;
 public class MyContractsController {
     private ContractRepository contractRepository;
     private VehicleRepository vehicleRepository;
-    private Long myCustomerID=1L;
+    private Long myUserID=1L;
 
     public MyContractsController(ContractRepository contractRepository,
                                 VehicleRepository vehicleRepository) {
@@ -32,7 +32,7 @@ public class MyContractsController {
         List<Optional> vehicleList = new ArrayList<>() {
         };
         for(int i=0;i<list.size();i++){
-            if(!Objects.equals(list.get(i).getCustomerID(), myCustomerID)){
+            if(!Objects.equals(list.get(i).getUserID(), myUserID)){
                 list.remove(i);
                 i--;
             }else{
