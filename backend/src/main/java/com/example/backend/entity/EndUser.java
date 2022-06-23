@@ -8,16 +8,17 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Entity
-public class User {
+public class EndUser {
     @Id
     private Long id;
     private boolean lessor;
 
-    public User(Long id){
+    public EndUser(Long id, boolean lessor){
         this.id=id;
+        this.lessor = lessor;
     }
 
-    public User() {
+    public EndUser() {
 
     }
 }

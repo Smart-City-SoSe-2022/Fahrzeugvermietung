@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
-import com.example.backend.entity.User;
+import com.example.backend.entity.EndUser;
 
-import com.example.backend.repository.UserRepository;
+import com.example.backend.repository.EndUserRepository;
 import net.minidev.json.*;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PortalNewAccount implements MessageListener {
-    private UserRepository userRepository;
+    private EndUserRepository endUserRepository;
 
-    public PortalNewAccount(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public PortalNewAccount(EndUserRepository endUserRepository) {
+        this.endUserRepository = endUserRepository;
     }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "Fahrzeugvermietung",durable = ""),
@@ -36,6 +36,11 @@ public class PortalNewAccount implements MessageListener {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        userRepository.saveAndFlush(new User(neu.getAsNumber("id").longValue()));
+        Long lo = neu.getAsNumber("id").longValue();
+        if(lo==1L){
+            endUserRepository.saveAndFlush(new EndUser(neu.getAsNumber("id").longValue(),true));
+        }else{
+            endUserRepository.saveAndFlush(new EndUser(neu.getAsNumber("id").longValue(),false));
+        }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.backend.jwt;
 
-import com.example.backend.repository.UserRepository;
+import com.example.backend.repository.EndUserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import java.io.Serializable;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 public class JwtTokenUtil implements Serializable {
     private final String secretString = "thisisthesecretkey";
     byte[] secret = secretString.getBytes();
-    private UserRepository userRepository;
+    private EndUserRepository endUserRepository;
 
-    public JwtTokenUtil(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public JwtTokenUtil(EndUserRepository endUserRepository) {
+        this.endUserRepository = endUserRepository;
     }
 
     public boolean checkLoggedIn(String token) {
@@ -36,7 +36,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private boolean checkUserInDB(String id){
-        return userRepository.existsById(Long.parseLong(id,10));
+        return endUserRepository.existsById(Long.parseLong(id,10));
     }
 
     private boolean checkLessorInDB(String id){

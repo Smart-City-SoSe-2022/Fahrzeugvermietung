@@ -2,7 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.entity.Vehicle;
 import com.example.backend.jwt.JwtTokenUtil;
-import com.example.backend.repository.UserRepository;
+import com.example.backend.repository.EndUserRepository;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +17,9 @@ public class VehicleController {
     private VehicleRepository vehicleRepository;
     private JwtTokenUtil jwtTokenUtil;
 
-    public VehicleController(VehicleRepository vehicleRepository, UserRepository userRepository) {
+    public VehicleController(VehicleRepository vehicleRepository, EndUserRepository endUserRepository) {
         this.vehicleRepository = vehicleRepository;
-        jwtTokenUtil = new JwtTokenUtil(userRepository);
+        jwtTokenUtil = new JwtTokenUtil(endUserRepository);
     }
 
     @GetMapping("")
