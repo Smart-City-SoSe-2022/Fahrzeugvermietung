@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PortalNewAccount implements MessageListener {
-    private UserRepository customerRepository;
+    private UserRepository userRepository;
 
-    public PortalNewAccount(UserRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public PortalNewAccount(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "Fahrzeugvermietung",durable = ""),
@@ -36,6 +36,6 @@ public class PortalNewAccount implements MessageListener {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        customerRepository.saveAndFlush(new User(neu.getAsNumber("id").longValue()));
+        userRepository.saveAndFlush(new User(neu.getAsNumber("id").longValue()));
     }
 }

@@ -44,15 +44,19 @@ public class VehicleController {
     }
 
     @GetMapping("/vermietete_fahrzeuge")
-    public List<Vehicle> getContractsAllRentVehicles(){
-        List<Vehicle> list = vehicleRepository.findAll();
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).isAvailability()){
-                list.remove(i);
-                i--;
+    public List<Vehicle> getContractsAllRentVehicles(@CookieValue(name = "JWT") String jwtID){
+        if(jwtTokenUtil.checkUserLessor(jwtID)) {
+            List<Vehicle> list = vehicleRepository.findAll();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).isAvailability()) {
+                    list.remove(i);
+                    i--;
+                }
             }
+            return list;
+        } else {
+            return new ArrayList<Vehicle>();
         }
-        return list;
     }
 
     @PostMapping("/neues_fahrzeug")
