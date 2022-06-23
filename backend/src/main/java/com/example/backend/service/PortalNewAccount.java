@@ -24,7 +24,7 @@ public class PortalNewAccount implements MessageListener {
         this.customerRepository = customerRepository;
     }
 
-    @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "",durable = ""),
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "Fahrzeugvermietung",durable = ""),
             exchange = @Exchange(value = "microservice.eventbus",type = "topic",durable = ""),key = "portal.account.created"
     )
     )

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PortalDelAccount implements MessageListener {
-    @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "",durable = ""),
+    @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "Fahrzeugvermietung",durable = ""),
             exchange = @Exchange(value = "microservice.eventbus",type = "topic",durable = ""),key = "portal.account.deleted"
     )
     )
