@@ -38,6 +38,6 @@ public class PortalNewAccount implements MessageListener {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        customerRepository.saveAndFlush(new Customer((Long) neu.getAsNumber("id")));
+        customerRepository.saveAndFlush(new Customer(neu.getAsNumber("id").longValue()));
     }
 }
