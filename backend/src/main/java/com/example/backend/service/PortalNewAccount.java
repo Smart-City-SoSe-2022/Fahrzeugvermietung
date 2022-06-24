@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
-import com.example.backend.entity.Customer;
+import com.example.backend.entity.EndUser;
 
-import com.example.backend.repository.CustomerRepository;
+import com.example.backend.repository.EndUserRepository;
 import net.minidev.json.*;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -14,14 +14,12 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 @Component
 public class PortalNewAccount implements MessageListener {
-    private CustomerRepository customerRepository;
+    private EndUserRepository endUserRepository;
 
-    public PortalNewAccount(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public PortalNewAccount(EndUserRepository endUserRepository) {
+        this.endUserRepository = endUserRepository;
     }
 
     @RabbitListener(bindings = @QueueBinding(value = @Queue(value = "Fahrzeugvermietung",durable = ""),
@@ -38,6 +36,11 @@ public class PortalNewAccount implements MessageListener {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        customerRepository.saveAndFlush(new Customer(neu.getAsNumber("id").longValue()));
+        Long lo = neu.getAsNumber("id").longValue();
+        if(lo==1L){
+            endUserRepository.saveAndFlush(new EndUser(neu.getAsNumber("id").longValue(),true));
+        }else{
+            endUserRepository.saveAndFlush(new EndUser(neu.getAsNumber("id").longValue(),false));
+        }
     }
 }

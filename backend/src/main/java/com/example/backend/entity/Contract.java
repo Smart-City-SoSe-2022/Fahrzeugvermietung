@@ -14,13 +14,13 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long customerID;
+    private Long userID;
     private Long vehicleID;
     private int priceOption;
     private String returnDate;
 
-    public Contract(Long customerID, Long vehicleID, int priceOption, String returnDate){
-        this.customerID = customerID;
+    public Contract(Long userID, Long vehicleID, int priceOption, String returnDate){
+        this.userID = userID;
         this.vehicleID = vehicleID;
         this.priceOption = priceOption;
         this.returnDate = returnDate;

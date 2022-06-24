@@ -1,6 +1,6 @@
 package com.example.backend.jwt;
 
-import com.example.backend.repository.CustomerRepository;
+import com.example.backend.repository.EndUserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import java.io.Serializable;
@@ -12,14 +12,18 @@ import org.springframework.stereotype.Component;
 public class JwtTokenUtil implements Serializable {
     private final String secretString = "thisisthesecretkey";
     byte[] secret = secretString.getBytes();
-    private CustomerRepository customerRepository;
+    private EndUserRepository endUserRepository;
 
-    public JwtTokenUtil(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public JwtTokenUtil(EndUserRepository endUserRepository) {
+        this.endUserRepository = endUserRepository;
     }
 
     public boolean checkLoggedIn(String token) {
         return checkUserInDB(getClaimFromToken(token, Claims::getSubject));
+    }
+
+    public boolean checkUserLessor(String token){
+        return checkLessorInDB(getClaimFromToken(token, Claims::getSubject));
     }
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver){
@@ -32,6 +36,10 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private boolean checkUserInDB(String id){
-        return customerRepository.existsById(Long.parseLong(id,10));
+        return endUserRepository.existsById(Long.parseLong(id,10));
+    }
+
+    private boolean checkLessorInDB(String id){
+        return Long.parseLong(id,10) == 1L;
     }
 }

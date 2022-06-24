@@ -2,10 +2,12 @@ package com.example.backend.controller;
 
 import com.example.backend.entity.Vehicle;
 import com.example.backend.jwt.JwtTokenUtil;
-import com.example.backend.repository.CustomerRepository;
+import com.example.backend.repository.EndUserRepository;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,9 @@ public class VehicleController {
     private VehicleRepository vehicleRepository;
     private JwtTokenUtil jwtTokenUtil;
 
-    public VehicleController(VehicleRepository vehicleRepository, CustomerRepository customerRepository) {
+    public VehicleController(VehicleRepository vehicleRepository, EndUserRepository endUserRepository) {
         this.vehicleRepository = vehicleRepository;
-        jwtTokenUtil = new JwtTokenUtil(customerRepository);
+        jwtTokenUtil = new JwtTokenUtil(endUserRepository);
     }
 
     @GetMapping("")
@@ -36,16 +38,25 @@ public class VehicleController {
         }
     }
 
+    @GetMapping("/user")
+    public boolean isLessor(@CookieValue(name = "JWT") String jwtID){
+        return jwtTokenUtil.checkUserLessor(jwtID);
+    }
+
     @GetMapping("/vermietete_fahrzeuge")
-    public List<Vehicle> getContractsAllRentVehicles(){
-        List<Vehicle> list = vehicleRepository.findAll();
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).isAvailability()){
-                list.remove(i);
-                i--;
+    public List<Vehicle> getContractsAllRentVehicles(@CookieValue(name = "JWT") String jwtID){
+        if(jwtTokenUtil.checkUserLessor(jwtID)) {
+            List<Vehicle> list = vehicleRepository.findAll();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).isAvailability()) {
+                    list.remove(i);
+                    i--;
+                }
             }
+            return list;
+        } else {
+            return new ArrayList<Vehicle>();
         }
-        return list;
     }
 
     @PostMapping("/neues_fahrzeug")
