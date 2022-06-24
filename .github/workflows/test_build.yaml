@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Test Build
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -6,10 +6,6 @@ name: Build and Deploy
 # documentation.
 
 on:
-  push:
-    branches: [ main ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ main ]
 
@@ -24,7 +20,6 @@ env:
 
 jobs:
   build:
-    #if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -45,6 +40,7 @@ jobs:
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
       - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           registry: ${{ env.REGISTRY }}
@@ -66,6 +62,7 @@ jobs:
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: ./frontend
+          push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ steps.meta.outputs.tags }}
             ${{ env.REGISTRY }}/${{ env.FRONTEND_NAME }}:latest
@@ -74,7 +71,6 @@ jobs:
 
         
   build_backend:
-    #if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -95,6 +91,7 @@ jobs:
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
       - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           registry: ${{ env.REGISTRY }}
@@ -116,61 +113,10 @@ jobs:
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: ./backend
+          push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ steps.meta.outputs.tags }}
             ${{ env.REGISTRY }}/${{ env.BACKEND_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.BACKEND_NAME }}:${{ github.sha }}
             
           labels: ${{ steps.meta.outputs.labels }}
-          
-  deploy_backend:
-    name: Deploy Backend
-    #if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-    needs: [ build_backend ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set the Kubernetes context
-        uses: azure/k8s-set-context@v2
-        with:
-          method: service-account
-          k8s-url: https://217.160.47.130:6443
-          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
-
-      - name: Checkout source code
-        uses: actions/checkout@v3
-
-      - name: Deploy to the Kubernetes cluster
-        uses: azure/k8s-deploy@v1
-        with:
-          namespace: default
-          manifests: |
-            backend/manifest/deployment.yaml
-            backend/manifest/service.yaml
-          images: |
-            ${{ env.REGISTRY }}/${{ env.BACKEND_NAME }}:${{ github.sha }}
-            
-  deploy_frontend:
-    name: Deploy Frontend
-    #if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-    needs: [ build ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set the Kubernetes context
-        uses: azure/k8s-set-context@v2
-        with:
-          method: service-account
-          k8s-url: https://217.160.47.130:6443
-          k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
-
-      - name: Checkout source code
-        uses: actions/checkout@v3
-
-      - name: Deploy to the Kubernetes cluster
-        uses: azure/k8s-deploy@v1
-        with:
-          namespace: default
-          manifests: |
-            frontend/manifest/deployment.yaml
-            frontend/manifest/service.yaml
-          images: |
-            ${{ env.REGISTRY }}/${{ env.FRONTEND_NAME }}:${{ github.sha }}
