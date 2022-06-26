@@ -7,8 +7,8 @@ kind: Deployment
 metadata:
   generation: 6
   labels:
-    k8s-app: portal-frontend
-  name: portal-frontend
+    k8s-app: fahrzeugvermietung-frontend
+  name: fahrzeugvermietung-frontend
   namespace: default
 spec:
   progressDeadlineSeconds: 600
