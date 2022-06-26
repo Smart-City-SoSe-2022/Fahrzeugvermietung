@@ -68,7 +68,7 @@ export default {
       this.vehicleReturnDate = date;
     },
     async fetchVehicles() {
-      const res = await fetch('http://localhost:8080/fahrzeugvermietung/fahrzeug/'+this.id)
+      const res = await fetch('http://server.it-humke.de:9002/fahrzeugvermietung/fahrzeug/'+this.id)
 
       const data = await res.json()
 
@@ -89,7 +89,7 @@ export default {
         credentials: "include"
       }
       console.log(requestOptions)
-      fetch('http://localhost:8080/fahrzeugvermietung/fahrzeug/'+this.id+'/createContract', requestOptions)
+      fetch('http://server.it-humke.de:9002/fahrzeugvermietung/fahrzeug/'+this.id+'/createContract', requestOptions)
       .then(() => this.$router.push({
         name: "home"
       }))
