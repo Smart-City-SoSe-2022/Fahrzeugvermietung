@@ -39,13 +39,13 @@ public class VehicleController {
     }
 
     @GetMapping("/user")
-    public boolean isLessor(@CookieValue(name = "JWT") String jwtID){
-        return jwtTokenUtil.checkUserLessor(jwtID);
+    public boolean isLessor(){
+        return jwtTokenUtil.checkUserLessor();
     }
 
     @GetMapping("/vermietete_fahrzeuge")
     public List<Vehicle> getContractsAllRentVehicles(@CookieValue(name = "JWT") String jwtID){
-        if(jwtTokenUtil.checkUserLessor(jwtID)) {
+        if(jwtTokenUtil.checkLoggedIn(jwtID) && jwtTokenUtil.checkUserLessor()) {
             List<Vehicle> list = vehicleRepository.findAll();
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).isAvailability()) {

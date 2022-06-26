@@ -2,7 +2,7 @@
     <div class="containerOutside">
         <div :key="vehicle.id" v-for="vehicle in vehicles">
             <div class="container">
-                <h3>elektro {{ vehicle.type }}</h3>
+                <h3>Elektro-{{ vehicle.type }}</h3>
                 <p>Modell: {{ vehicle.modell }}</p>
                 <p>Farbe: {{ vehicle.color }}</p>
             </div>

@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.BillForBank;
+import com.example.backend.ContractData;
 import com.example.backend.entity.Contract;
 import com.example.backend.entity.Vehicle;
 import com.example.backend.repository.ContractRepository;
@@ -33,15 +34,14 @@ public class ContractController {
         return vehicleRepository.getById(id);
     }
 
-    @PostMapping("")
-    public void createRentContract(@RequestParam("priceOption") int priceOption,
-                                    @RequestParam("returnDate") String returnDate){
-        contractRepository.saveAndFlush(new Contract(userID,vehicleID,priceOption,returnDate));
+    @PostMapping("/createContract")
+    public void createRentContract(@RequestBody ContractData contractData){
+        contractRepository.saveAndFlush(new Contract(userID,vehicleID,contractData.getPriceOption(),contractData.getReturnDate()));
         Vehicle vehicle = vehicleRepository.findById(vehicleID).get();
         vehicle.setAvailability(false);
         vehicle.setUserID(userID);
         vehicleRepository.save(vehicle);
-        rabbitMQSender.send(new BillForBank(userID,priceOption));
+        rabbitMQSender.send(new BillForBank(userID,contractData.getPriceOption()));
     }
 
 }

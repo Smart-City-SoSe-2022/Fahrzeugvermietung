@@ -11,11 +11,6 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
     path: '/fahrzeug/:id',
     name: 'vehicle',
     props: true,
