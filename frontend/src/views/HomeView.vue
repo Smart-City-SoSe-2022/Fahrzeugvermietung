@@ -48,15 +48,6 @@ export default {
 
       return data
     },
-    getCookie() {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-      credentials: "include"
-    };
-
-    fetch("http://server.it-humke.de:9002/fahrzeugvermietung/get", requestOptions)
-  },
     async isLessor() {
     var requestOptions = {
       method: 'GET',
@@ -79,7 +70,6 @@ export default {
   },
   async created() {
     this.vehicles = await this.fetchVehicles()
-    this.getCookie()
     this.islessor = await this.isLessor()
   }
 }
