@@ -1,12 +1,13 @@
 <template>
   <Header title="Fahrzeugvermietung"/>
 
+  <div class="h2 mb-0">
+    <b-icon icon="arrow-left"></b-icon>
+  </div>
   <div class="float-end">
         <button class="btn btn-outline-primary" v-if=" islessor === 'true'" @click="lendVehicles">
             vermietete Fahrzeuge
         </button>
-    </div>
-  <div class="float-end">
         <button class="btn btn-outline-primary" @click="myVehicles">
             gemietete Fahrzeuge
         </button>

@@ -37,6 +37,7 @@ export default {
         margin: 20px auto;
         overflow: auto;
         border: 1px solid black;
+        background: lightgoldenrodyellow;
         padding: 5px;
         border-radius: 5px;
         margin-inline: 200px;
