@@ -1,6 +1,6 @@
 <template>
     <div class="vehicle">
-        <h3>elektro {{ vehicle.type }}</h3>
+        <h3>Elektro-{{ vehicle.type }}</h3>
         <p>Modell: {{ vehicle.modell }}</p>
         <p>Farbe: {{ vehicle.color }}</p>
     </div>
