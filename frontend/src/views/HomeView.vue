@@ -86,7 +86,6 @@ export default {
   },
   async created() {
     this.vehicles = await this.fetchVehicles()
-    this.getCookie()
     this.islessor = await this.isLessor()
   }
 }
