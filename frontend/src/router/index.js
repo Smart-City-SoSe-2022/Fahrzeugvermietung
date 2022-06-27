@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import VehicleView from '../views/VehicleView.vue'
 import LendVehicleView from '../views/LendVehicleView.vue'
 import MyVehicleView from '../views/MyVehicleView.vue'
+import NewVehicleView from '../views/NewVehicleView.vue'
 
 const routes = [
   {
@@ -27,6 +28,12 @@ const routes = [
     name: 'MyVehicles',
     props: true,
     component: MyVehicleView
+  },
+  {
+    path: '/neues_fahrzeug',
+    name: 'NewVehicle',
+    props: true,
+    component: NewVehicleView
   }
 ]
 

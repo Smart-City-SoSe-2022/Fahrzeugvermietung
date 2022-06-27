@@ -60,18 +60,19 @@ public class VehicleController {
     }
 
     @PostMapping("/neues_fahrzeug")
-    public void createVehicle(@RequestParam("type") String type,
-                              @RequestParam("modell") String modell,
-                              @RequestParam("color") String color,
-                              @RequestParam("distance") int distance,
-                              @RequestParam("max_speed") int max_speed,
-                              @RequestParam("mileage") int mileage,
-                              @RequestParam("price_day") int price_day,
-                              @RequestParam("price_week") int price_week,
-                              @RequestParam("price_month") int price_month,
-                              @RequestParam("availability") boolean availability){
-        vehicleRepository.saveAndFlush(new Vehicle(type,modell,color,distance,max_speed,mileage,price_day,price_week,price_month,availability));
+    public void createVehicle(@CookieValue("JWT") String jwtID,
+            @RequestBody Vehicle vehicle){
+        if(jwtTokenUtil.checkLoggedIn(jwtID) && jwtTokenUtil.checkUserLessor()){
+            vehicleRepository.saveAndFlush(new Vehicle(vehicle.getType(),
+                    vehicle.getModell(),
+                    vehicle.getColor(),
+                    vehicle.getDistance(),
+                    vehicle.getMaxSpeed(),
+                    vehicle.getMileage(),
+                    vehicle.getPriceDay(),
+                    vehicle.getPriceWeek(),
+                    vehicle.getPriceMonth(),
+                    vehicle.isAvailability()));
+        }
     }
-
-
 }
