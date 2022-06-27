@@ -26,24 +26,6 @@ export default {
     name: 'Vehicle',
     props: {
         vehicles: Array
-    },
-    methods: {
-    async fetchContractPaid(number) {
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type","application/json");
-
-      var requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow',
-        credentials: "include"
-      }
-      const res = await fetch('http://localhost:8080/fahrzeugvermietung/fahrzeug/'+number+'/getContract', requestOptions)
-
-      const data = await res.json()
-
-      return data
-    }
     }
 }
 </script>
