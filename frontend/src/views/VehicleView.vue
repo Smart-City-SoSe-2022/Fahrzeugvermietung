@@ -1,4 +1,7 @@
 <template>
+<div class="float-start">
+    <img class="leftBack" @click="this.$router.push('/')" src="../assets/back.png" widht="50" height="50">
+  </div>
   <p class="containerOutside" >
     <div>
         <h1>Elektro-{{vehicle.type}}</h1>
@@ -68,7 +71,14 @@ export default {
       this.vehicleReturnDate = date;
     },
     async fetchVehicles() {
-      const res = await fetch('http://server.it-humke.de:9002/fahrzeugvermietung/fahrzeug/'+this.id)
+      const requestOptions = {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+        redirect: "follow",
+        credentials: "include"
+      }
+
+      const res = await fetch('http://server.it-humke.de:9002/fahrzeugvermietung/fahrzeug/'+this.id, requestOptions)
 
       const data = await res.json()
 
@@ -79,7 +89,6 @@ export default {
         priceOption: this.vehiclePrice,
         returnDate: this.vehicleReturnDate,
       }
-      console.log(body)
 
       const requestOptions = {
         method: "POST",
@@ -88,7 +97,7 @@ export default {
         redirect: "follow",
         credentials: "include"
       }
-      console.log(requestOptions)
+
       fetch('http://server.it-humke.de:9002/fahrzeugvermietung/fahrzeug/'+this.id+'/createContract', requestOptions)
       .then(() => this.$router.push({
         name: "home"
@@ -98,6 +107,7 @@ export default {
   },
   async created() {
     this.vehicle = await this.fetchVehicles()
+    this.onChangeMonth()
   }
 }
 </script>
@@ -121,5 +131,8 @@ export default {
         border-radius: 5px;
         margin-inline: 600px;
         margin-block: 50px;
+    }
+    .leftBack{
+      padding-left: 80px;
     }
 </style>

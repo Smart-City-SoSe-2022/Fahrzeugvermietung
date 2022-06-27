@@ -1,5 +1,8 @@
 <template>
   <Header title="gemietete Fahrzeuge"/>
+  <div class="float-start">
+    <img class="leftBack" @click="this.$router.push('/')" src="../assets/back.png" widht="50" height="50">
+  </div>
     <MyVehicles :vehicles="vehicles"/>
 </template>
 
@@ -42,3 +45,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+  .leftBack {
+    padding-left: 80px;
+  }
+</style>

@@ -69,6 +69,10 @@ public class JwtTokenUtil implements Serializable {
         this.lessor = Long.parseLong(id, 10) == 1L;
     }
 
+    public Long getMyID(String token){
+        return Long.parseLong((getClaimFromToken(token, Claims::getSubject)),10);
+    }
+
     private void decode(String token){
         chunks = token.split("\\.");
         Base64.Decoder decoder = Base64.getUrlDecoder();

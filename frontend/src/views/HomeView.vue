@@ -1,11 +1,11 @@
 <template>
   <Header title="Fahrzeugvermietung"/>
 
-  <div class="h2 mb-0">
-    <b-icon icon="arrow-left"></b-icon>
+  <div class="float-start">
+    <img class="leftBack" @click="backToPortal()" src="../assets/back.png" widht="50" height="50">
   </div>
   <div class="float-end">
-        <button class="btn btn-outline-primary" v-if=" islessor === 'true'" @click="lendVehicles">
+        <button class="btn btn-outline-primary" v-if="checkEqual(islessor)" @click="lendVehicles">
             vermietete Fahrzeuge
         </button>
         <button class="btn btn-outline-primary" @click="myVehicles">
@@ -14,6 +14,12 @@
     </div>
   
   <Vehicles :vehicles="vehicles" />
+  <div v-if=(checkEqual(islessor))>
+    <div class="position-absolute start-50">
+      <img src="../assets/plus.png" @click="createNewVehicle" width="100" height="100">
+    </div>
+  </div>
+  
 </template>
 
 <script>
@@ -49,15 +55,15 @@ export default {
 
       return data
     },
-    getCookie() {
-    var requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-      credentials: "include"
-    };
-
-    fetch("http://server.it-humke.de:9002/fahrzeugvermietung/get", requestOptions)
-  },
+    backToPortal(){
+      window.location.href='http://server.it-humke.de:8001'
+    },
+    checkEqual(string) {
+      return string=="true"
+    },
+    createNewVehicle() {
+      this.$router.push('/neues_fahrzeug')
+    },
     async isLessor() {
     var requestOptions = {
       method: 'GET',
@@ -86,3 +92,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+  .leftBack {
+    padding-left: 80px;
+  }
+</style>
